@@ -1,2 +1,0 @@
-# tictactoe
-Game TicTacToe
