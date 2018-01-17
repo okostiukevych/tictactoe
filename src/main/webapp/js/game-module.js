@@ -121,14 +121,6 @@ gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope',
             }
         };
 
-        // function checkPlayerTurn() {
-        //     return http.get('/move/turn').success(function (data) {
-        //         scope.playerTurn = data;
-        //     }).error(function (data, status, headers, config) {
-        //         scope.errorMessage = "Failed to get the player turn"
-        //     });
-        // }
-
         function getNextMove() {
 
             scope.nextMoveData = []
