@@ -89,9 +89,4 @@ public class MoveServiceImpl implements MoveService {
                 .map(move -> new Position(move.getBoardRowNumber(), move.getBoardColumnNumber()))
                 .collect(toList());
     }
-
-    @Override
-    public int getTheNumberOfPlayerMovesInGame(Game game, Player player) {
-        return moveRepository.countByGameAndPlayer(game, player);
-    }
 }

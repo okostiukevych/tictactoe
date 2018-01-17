@@ -18,5 +18,4 @@ public interface MoveService {
     List<Move> getMovesInGame(Game game);
     List<Position> getTakenMovePositionsInGame(Game game);
     List<Position> getPlayerMovePositionsInGame(Game game, Player player);
-    int getTheNumberOfPlayerMovesInGame(Game game, Player player);
 }
