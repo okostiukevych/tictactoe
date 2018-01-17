@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: develop
+#  Database configurations
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tictactoe?characterEncoding=UTF-8
+    username: root
+    password: 1
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
