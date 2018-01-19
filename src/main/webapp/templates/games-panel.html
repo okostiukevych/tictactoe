@@ -37,35 +37,38 @@
             </form>
         </div>
 
-        <!--&lt;!&ndash; JOIN EXISITNG GAME &ndash;&gt;-->
-        <!--<div class="col-md-6" ng-controller="gamesToJoinController">-->
+        <!-- LIST OF ALL GAMES -->
+        <div class="col-md-6" ng-controller="gamesToJoinController">
 
-                <!--<table class="table table-hover table-striped table-condensed" ng-show="gamesToJoin.length">-->
-                    <!--<h2 class="lead">Join existing game</h2>-->
-                    <!--<thead>-->
-                        <!--<td>Started player</td>-->
-                        <!--<td>Game status</td>-->
-                        <!--<td>Created</td>-->
-                        <!--<td></td>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr ng-repeat="game in gamesToJoin">-->
-                        <!--<td>{{game.firstPlayer.userName}}</td>-->
-                        <!--<td>{{game.gameStatus}}</td>-->
-                        <!--<td>{{game.created | date:'MM-dd-yyyy HH:mm:ss'}}</td>-->
+                <table class="table table-hover table-striped table-condensed" ng-show="gamesToJoin.length">
+                    <h2 class="lead">List of all games</h2>
+                    <thead>
+                        <td>#</td>
+                        <td>Name</td>
+                        <td>Status</td>
+                        <td>Type</td>
+                        <td></td>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="game in gamesToJoin">
+                        <td>{{game.id}}</td>
+                        <td>{{game.name}}</td>
+                        <td>{{game.status}}</td>
+                        <td>{{game.type}}</td>
+                        <td></td>
                         <!--<td>-->
                             <!--<button type="submit" class="btn btn-sm" ng-click="joinGame(game.id)">-->
                             <!--<span class="glyphicon glyphicon-plus"></span> Join </button>-->
                         <!--</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
+                    </tr>
+                    </tbody>
+                </table>
 
-            <!--<div ng-show="!gamesToJoin.length">-->
-                <!--No games to join.-->
-            <!--</div>-->
+            <div ng-show="!gamesToJoin.length">
+                No games to join.
+            </div>
 
-        <!--</div>-->
+        </div>
 
         <!--&lt;!&ndash; PLAYER GAMES &ndash;&gt;-->
         <!--<div class="col-md-6" ng-controller="playerGamesController">-->

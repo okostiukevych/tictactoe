@@ -32,9 +32,37 @@ gameModule.controller('newGameController', ['$rootScope', '$scope', '$http', '$l
                 location.path('/games/panel');
             });
         }
-
     }
 ]);
+
+gameModule.controller('gamesToJoinController', ['$scope', '$http', '$location',
+    function (scope, http, location) {
+
+        scope.gamesToJoin = [];
+
+        http.get('/game/list').success(function (data) {
+            scope.gamesToJoin = data;
+        }).error(function (data, status, headers, config) {
+            location.path('/player/panel');
+        });
+
+
+        // scope.joinGame = function (id) {
+        //
+        //     var params = {"id" : id}
+        //
+        //     http.post('/game/join', params, {
+        //         headers: {
+        //             'Content-Type': 'application/json; charset=UTF-8'
+        //         }
+        //     }).success(function (data) {
+        //         location.path('/game/' + data.id);
+        //     }).error(function (data, status, headers, config) {
+        //         location.path('/player/panel');
+        //     });
+        // }
+
+    }]);
 
 gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope', '$http',
 
