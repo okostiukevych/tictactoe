@@ -9,6 +9,7 @@ import java.util.List;
 public interface GameService {
 
     Game getById(int gameId);
+    Game getByName(String name);
     List<Game> getAll();
     List<Game> getAllByStatus(GameStatus status);
 

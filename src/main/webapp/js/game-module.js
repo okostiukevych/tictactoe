@@ -46,22 +46,20 @@ gameModule.controller('gamesToJoinController', ['$scope', '$http', '$location',
             location.path('/player/panel');
         });
 
+        scope.joinGame = function (name) {
 
-        // scope.joinGame = function (id) {
-        //
-        //     var params = {"id" : id}
-        //
-        //     http.post('/game/join', params, {
-        //         headers: {
-        //             'Content-Type': 'application/json; charset=UTF-8'
-        //         }
-        //     }).success(function (data) {
-        //         location.path('/game/' + data.id);
-        //     }).error(function (data, status, headers, config) {
-        //         location.path('/player/panel');
-        //     });
-        // }
+            var params = {'name' : name};
 
+            http.post('/game/join', params, {
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            }).success(function (data) {
+                location.path('/game/' + data.id);
+            }).error(function (data, status, headers, config) {
+                location.path('/player/panel');
+            });
+        }
     }]);
 
 gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope', '$http',
@@ -95,16 +93,12 @@ gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope',
             http.get('/game/' + routeParams.id).success(function (data) {
                 scope.gameProperties = data;
                 gameStatus = scope.gameProperties.gameStatus;
-                // resetMoveNumber();
                 getMoveHistory();
             }).error(function (data, status, headers, config) {
                 scope.errorMessage = "Failed do load game properties";
             });
         }
-        //
-        // function resetMoveNumber() {
-        //
-        // }
+
         function getMoveHistory() {
             scope.movesInGame = [];
 
@@ -142,7 +136,6 @@ gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope',
                             alert(gameStatus)
                         }
                     });
-
                 }).error(function (data, status, headers, config) {
                     scope.errorMessage = "Can't send the move"
                 });
@@ -151,7 +144,7 @@ gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope',
 
         function getNextMove() {
 
-            scope.nextMoveData = []
+            scope.nextMoveData = [];
             // COMPUTER IS A SECOND PLAYER
 
             if(scope.gameProperties.type === 'ONE_VS_COMPUTER') {

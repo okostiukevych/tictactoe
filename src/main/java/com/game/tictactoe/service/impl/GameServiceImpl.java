@@ -27,8 +27,13 @@ public class GameServiceImpl implements GameService {
     @Transactional(readOnly = true)
     @Override
     public Game getById(int gameId) {
-        Game game = gameRepository.findOne(gameId);
-        return game;
+        return gameRepository.findOne(gameId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Game getByName(String name) {
+        return gameRepository.findByName(name);
     }
 
     @Transactional(readOnly = true)

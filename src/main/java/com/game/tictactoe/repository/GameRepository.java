@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface GameRepository extends JpaRepository<Game, Integer> {
 
+    Game findByName(String name);
     List<Game> findAllByStatus(GameStatus status);
 }
