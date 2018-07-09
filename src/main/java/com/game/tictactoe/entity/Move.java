@@ -7,10 +7,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 @Data
-@Builder
+@Builder(builderClassName = "Builder", toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -36,6 +47,10 @@ public class Move {
 
     @PrePersist
     private void init() {
-        player = moveNumber % 2 != 0 ? Player.PLAYER_1 : game.getType() == GameType.ONE_VS_ONE ? Player.PLAYER_2 : Player.COMPUTER;
+        player = moveNumber % 2 != 0
+                ? Player.PLAYER_1
+                : GameType.ONE_VS_ONE.equals(game.getType())
+                        ? Player.PLAYER_2
+                        : Player.COMPUTER;
     }
 }

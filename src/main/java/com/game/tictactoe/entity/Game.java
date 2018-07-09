@@ -3,12 +3,14 @@ package com.game.tictactoe.entity;
 import com.game.tictactoe.entity.enums.GameStatus;
 import com.game.tictactoe.entity.enums.GameType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@Builder(builderClassName = "Builder", toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,7 +21,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private int id;
-    @Column(name = "name", nullable = false, length = 10)
+    @Column(name = "name", nullable = false, unique = true, length = 10)
     private String name;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

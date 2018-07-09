@@ -13,15 +13,12 @@ import com.game.tictactoe.service.helper.GameHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
-@Transactional
 @Service
 public class MoveServiceImpl implements MoveService {
 
@@ -34,25 +31,23 @@ public class MoveServiceImpl implements MoveService {
 
     @Override
     public Move createNewMove(Game game, MoveForm form) {
-        Move move = Move.builder()
+        return moveRepository.save(Move.builder()
                 .boardRowNumber(form.getBoardRowNumber())
                 .boardColumnNumber(form.getBoardColumnNumber())
                 .moveNumber(form.getMoveNumber())
                 .game(game)
-                .build();
-        return moveRepository.save(move);
+                .build());
     }
 
     @Override
     public Move autoCreateMove(Game game, AutoMoveForm form) {
         Position position = GameHelper.nextAutoMove(getTakenMovePositionsInGame(game));
-        Move move = Move.builder()
+        return moveRepository.save(Move.builder()
                 .boardRowNumber(position.getBoardRowNumber())
                 .boardColumnNumber(position.getBoardColumnNumber())
                 .moveNumber(form.getMoveNumber())
                 .game(game)
-                .build();
-        return moveRepository.save(move);
+                .build());
     }
 
     @Override
@@ -63,7 +58,7 @@ public class MoveServiceImpl implements MoveService {
             return GameStatus.O_WON;
         } else if (GameHelper.isWinner(getPlayerMovePositionsInGame(game, Player.COMPUTER))) {
             return GameStatus.O_WON;
-        } else if (GameHelper.isBoardIsFull(getTakenMovePositionsInGame(game))) {
+        } else if (GameHelper.boardIsFullFilled(getTakenMovePositionsInGame(game))) {
             return GameStatus.DRAW;
         } else {
             return GameStatus.IN_PROGRESS;
@@ -78,8 +73,8 @@ public class MoveServiceImpl implements MoveService {
     @Override
     public List<Position> getTakenMovePositionsInGame(Game game) {
         return moveRepository.findAllByGame(game).stream()
-                .map(move -> new Position(move.getBoardRowNumber(), move.getBoardColumnNumber()))
-                .collect(Collectors.toList());
+                .map(move -> new Position(move.getBoardRowNumber(), move.getBoardColumnNumber(), move.getPlayer()))
+                .collect(toList());
     }
 
     @Override

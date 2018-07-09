@@ -2,7 +2,7 @@ server:
   port: 8099
 spring:
   profiles:
-    active: develop-home
+    active: develop-work
 ---
 spring:
   profiles: develop-home

@@ -1,6 +1,5 @@
 package com.game.tictactoe.dto;
 
-import com.game.tictactoe.entity.enums.GameStatus;
 import com.game.tictactoe.entity.enums.Player;
 import lombok.Data;
 

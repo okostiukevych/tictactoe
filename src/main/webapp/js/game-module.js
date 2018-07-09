@@ -62,9 +62,9 @@ gameModule.controller('gamesToJoinController', ['$scope', '$http', '$location',
         }
     }]);
 
-gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope', '$http',
+gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope', '$http', '$location',
 
-    function (rootScope, routeParams, scope, http) {
+    function (rootScope, routeParams, scope, http, location) {
 
         scope.moveNumber = 0;
         scope.rows = [
@@ -133,7 +133,8 @@ gameModule.controller('gameController', ['$rootScope', '$routeParams', '$scope',
                         if (gameStatus === 'IN_PROGRESS') {
                             getNextMove();
                         } else {
-                            alert(gameStatus)
+                            alert(gameStatus);
+                            location.path('/player/panel');
                         }
                     });
                 }).error(function (data, status, headers, config) {
