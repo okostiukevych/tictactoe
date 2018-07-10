@@ -24,4 +24,4 @@ dist/
 nbdist/
 .nb-gradle/
 
-application.yml
+tictactoe/src/main/resources/application.yml
