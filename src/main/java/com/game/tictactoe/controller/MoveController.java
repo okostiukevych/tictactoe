@@ -4,7 +4,6 @@ import com.game.tictactoe.dto.MoveDto;
 import com.game.tictactoe.entity.Game;
 import com.game.tictactoe.entity.Move;
 import com.game.tictactoe.entity.enums.GameStatus;
-import com.game.tictactoe.entity.enums.Player;
 import com.game.tictactoe.form.AutoMoveForm;
 import com.game.tictactoe.form.MoveForm;
 import com.game.tictactoe.service.GameService;
@@ -14,7 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -27,20 +30,19 @@ public class MoveController {
     private final MoveService moveService;
     private final GameService gameService;
     private final ModelMapper modelMapper;
-    private final HttpSession session;
 
     @Autowired
     public MoveController(MoveService moveService,
                           GameService gameService,
-                          ModelMapper modelMapper, HttpSession session) {
+                          ModelMapper modelMapper) {
         this.moveService = moveService;
         this.gameService = gameService;
         this.modelMapper = modelMapper;
-        this.session = session;
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<MoveDto> createNewMove(@RequestBody MoveForm form) {
+    public ResponseEntity<MoveDto> createNewMove(@RequestBody MoveForm form,
+                                                 HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
         Game byId = gameService.getById(gameId);
 
@@ -53,7 +55,8 @@ public class MoveController {
     }
 
     @PostMapping(value = "/autoCreate")
-    public ResponseEntity<MoveDto> autoCreateMove(@RequestBody AutoMoveForm form) {
+    public ResponseEntity<MoveDto> autoCreateMove(@RequestBody AutoMoveForm form,
+                                                  HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
         Game byId = gameService.getById(gameId);
 
@@ -66,9 +69,12 @@ public class MoveController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<List<MoveDto>> getMovesInGame() {
+    public ResponseEntity<List<MoveDto>> getMovesInGame(HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
         Game byId = gameService.getById(gameId);
-        return ResponseEntity.ok(modelMapper.map(moveService.getMovesInGame(byId), new TypeToken<List<MoveDto>>() {}.getType()));
+        List<Move> movesInGame = moveService.getMovesInGame(byId);
+        log.info("Size of all moves is {} (game: {})", movesInGame.size(), gameId);
+        return ResponseEntity.ok(modelMapper.map(movesInGame, new TypeToken<List<MoveDto>>() {
+        }.getType()));
     }
 }

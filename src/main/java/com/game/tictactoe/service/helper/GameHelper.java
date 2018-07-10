@@ -95,7 +95,8 @@ public class GameHelper {
 
     private static Position getPositionWithPlayer(Position position, List<Position> takenPositions) {
         return takenPositions.stream()
-                .filter(p -> p.equals(position)).findFirst()
+                .filter(p -> p.equals(position))
+                .findFirst()
                 .get();
     }
 
@@ -127,16 +128,48 @@ public class GameHelper {
     private static List<List<Position>> getWinningPositions() {
         List<List<Position>> winingPositions = new ArrayList<>();
 
-        winingPositions.add(asList(new Position(1, 1), new Position(1, 2), new Position(1, 3)));
-        winingPositions.add(asList(new Position(2, 1), new Position(2, 2), new Position(2, 3)));
-        winingPositions.add(asList(new Position(3, 1), new Position(3, 2), new Position(3, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(1, 1),
+                        new Position(1, 2),
+                        new Position(1, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(2, 1),
+                        new Position(2, 2),
+                        new Position(2, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(3, 1),
+                        new Position(3, 2),
+                        new Position(3, 3)));
 
-        winingPositions.add(asList(new Position(1, 1), new Position(2, 1), new Position(3, 1)));
-        winingPositions.add(asList(new Position(1, 2), new Position(2, 2), new Position(3, 2)));
-        winingPositions.add(asList(new Position(1, 3), new Position(2, 3), new Position(3, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(1, 1),
+                        new Position(2, 1),
+                        new Position(3, 1)));
+        winingPositions.add(
+                asList(
+                        new Position(1, 2),
+                        new Position(2, 2),
+                        new Position(3, 2)));
+        winingPositions.add(
+                asList(
+                        new Position(1, 3),
+                        new Position(2, 3),
+                        new Position(3, 3)));
 
-        winingPositions.add(asList(new Position(1, 1), new Position(2, 2), new Position(3, 3)));
-        winingPositions.add(asList(new Position(3, 1), new Position(2, 2), new Position(1, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(1, 1),
+                        new Position(2, 2),
+                        new Position(3, 3)));
+        winingPositions.add(
+                asList(
+                        new Position(3, 1),
+                        new Position(2, 2),
+                        new Position(1, 3)));
 
         return winingPositions;
     }

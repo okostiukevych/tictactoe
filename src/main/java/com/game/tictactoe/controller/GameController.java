@@ -9,7 +9,12 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,19 +26,17 @@ public class GameController {
 
     private final GameService gameService;
     private final ModelMapper modelMapper;
-    private final HttpSession session;
 
     @Autowired
     public GameController(GameService gameService,
-                          ModelMapper modelMapper,
-                          HttpSession session) {
+                          ModelMapper modelMapper) {
         this.gameService = gameService;
         this.modelMapper = modelMapper;
-        this.session = session;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<GameDto> createNewGame(@RequestBody GameForm form) {
+    public ResponseEntity<GameDto> createNewGame(@RequestBody GameForm form,
+                                                 HttpSession session) {
         Game newGame = gameService.createNewGame(form);
         session.setAttribute("gameId", newGame.getId());
         log.info("Game [id={}] stored in session", newGame.getId());
@@ -41,7 +44,8 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GameDto> getGameById(@PathVariable int id) {
+    public ResponseEntity<GameDto> getGameById(@PathVariable int id,
+                                               HttpSession session) {
         Game byId = gameService.getById(id);
         session.setAttribute("gameId", id);
         log.info("Game [id={}] stored in session", id);
@@ -49,14 +53,15 @@ public class GameController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<GameDto> joinGame(@RequestBody GameForm form) {
+    public ResponseEntity<GameDto> joinGame(@RequestBody GameForm form,
+                                            HttpSession session) {
         Game byId = gameService.getByName(form.getName());
         session.setAttribute("gameId", byId.getId());
         log.info("Game [id={}] stored in session", byId.getId());
         return ResponseEntity.ok(modelMapper.map(byId, GameDto.class));
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity<List<GameDto>> getAllGames() {
         List<Game> games = gameService.getAll();
         log.info("Size of all games is {}", games.size());

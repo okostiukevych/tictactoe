@@ -72,15 +72,16 @@ public class MoveServiceImpl implements MoveService {
 
     @Override
     public List<Position> getTakenMovePositionsInGame(Game game) {
-        return moveRepository.findAllByGame(game).stream()
+        List<Move> allMovesByGame = moveRepository.findAllByGame(game);
+        return allMovesByGame.stream()
                 .map(move -> new Position(move.getBoardRowNumber(), move.getBoardColumnNumber(), move.getPlayer()))
                 .collect(toList());
     }
 
     @Override
     public List<Position> getPlayerMovePositionsInGame(Game game, Player player) {
-        List<Move> moves = moveRepository.findAllByGameAndPlayer(game, player);
-        return moves.stream()
+        List<Move> allMovesByGameAndPlayer = moveRepository.findAllByGameAndPlayer(game, player);
+        return allMovesByGameAndPlayer.stream()
                 .map(move -> new Position(move.getBoardRowNumber(), move.getBoardColumnNumber()))
                 .collect(toList());
     }
