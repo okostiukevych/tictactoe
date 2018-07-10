@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: develop
+---
+spring:
+  profiles: develop
+  #  Database configurations
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/tictactoe?characterEncoding=UTF-8&useSSL=false
+    username: postgres
+    password: 1
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true

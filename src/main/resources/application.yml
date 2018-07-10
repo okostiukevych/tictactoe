@@ -2,21 +2,26 @@ server:
   port: 8099
 spring:
   profiles:
-    active: develop-work
+    active: develop-home
 ---
 spring:
   profiles: develop-home
   #  Database configurations
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/tictactoe?characterEncoding=UTF-8&useSSL=false
-    username: root
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/tictactoe?characterEncoding=UTF-8&useSSL=false
+#    username: root
+#    password: 1
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/tictactoe?characterEncoding=UTF-8&useSSL=false
+    username: postgres
     password: 1
   jpa:
     hibernate:
       ddl-auto: create-drop
     database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
+#    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     show-sql: true
 ---
 spring:
