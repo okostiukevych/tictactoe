@@ -40,7 +40,7 @@ public class MoveController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     public ResponseEntity<MoveDto> createNewMove(@RequestBody MoveForm form,
                                                  HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
@@ -54,7 +54,7 @@ public class MoveController {
         return ResponseEntity.ok(modelMapper.map(newMove, MoveDto.class));
     }
 
-    @PostMapping(value = "/autoCreate")
+    @PostMapping("/autoCreate")
     public ResponseEntity<MoveDto> autoCreateMove(@RequestBody AutoMoveForm form,
                                                   HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
@@ -68,7 +68,7 @@ public class MoveController {
         return ResponseEntity.ok(modelMapper.map(newAutoMove, MoveDto.class));
     }
 
-    @GetMapping(value = "/list")
+    @GetMapping("/list")
     public ResponseEntity<List<MoveDto>> getMovesInGame(HttpSession session) {
         int gameId = (int) session.getAttribute("gameId");
         Game byId = gameService.getById(gameId);
